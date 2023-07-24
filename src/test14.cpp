@@ -2,38 +2,36 @@
 
 vector<int> productExceptSelf(vector<int> &nums)
 {
-    vector<int> simpleDigits;
-    simpleDigits.resize(nums.size());
+    vector<int> rProduct;
+    vector<int> lProduct;
 
-    for (size_t i = 0; i < simpleDigits.size(); ++i)
+    rProduct.resize(nums.size());
+    lProduct.resize(nums.size());
+
+    rProduct.back() = 1;
+
+    for (size_t i = 1; i < nums.size(); ++i)
     {
-        int prod = 1;
-        for (size_t j = 0; j < nums.size(); ++j)
-        {
-            if (j == i)
-            {
-                continue;
-            }
-            else if (nums[j] == 0)
-            {
-                prod = 0;
-                break;
-            }
-
-            prod *= nums[j];
-        }
-
-        simpleDigits[i] = prod;
+        const size_t rPrev = nums.size() - i;
+        rProduct[rPrev - 1] = rProduct[rPrev] * nums[rPrev];
     }
 
-    return simpleDigits;
+    lProduct.front() = 1;
+
+    for (size_t i = 1; i < nums.size(); ++i)
+    {
+        const size_t lPrev = i - 1;
+        lProduct[i] = lProduct[lPrev] * nums[lPrev];
+        lProduct[i - 1] *= rProduct[i - 1];
+    }
+
+    return lProduct;
 }
 
 int main(int argc, char const *argv[])
 {
     vector<int> res0;
     vector<int> res1;
-    // vector<int> res2;
 
     {
         vector<int> nums{1, 2, 3, 4};
