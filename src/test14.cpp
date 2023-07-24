@@ -3,20 +3,21 @@
 vector<int> productExceptSelf(vector<int> &nums)
 {
     const int n = nums.size();
-    vector<int> result(n, 1);
+    vector<int> result;
+    result.resize(n, 1);
 
-    int leftProduct = 1;
+    int tmpProduct = 1;
     for (int i = 0; i < n; ++i)
     {
-        result[i] = leftProduct;
-        leftProduct *= nums[i];
+        result[i] = tmpProduct;
+        tmpProduct *= nums[i];
     }
 
-    int rightProduct = 1;
+    tmpProduct = 1;
     for (int i = n - 1; i >= 0; --i)
     {
-        result[i] *= rightProduct;
-        rightProduct *= nums[i];
+        result[i] *= tmpProduct;
+        tmpProduct *= nums[i];
     }
 
     return result;
