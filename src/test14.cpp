@@ -2,30 +2,24 @@
 
 vector<int> productExceptSelf(vector<int> &nums)
 {
-    vector<int> rProduct;
-    vector<int> lProduct;
+    const int n = nums.size();
+    vector<int> result(n, 1);
 
-    rProduct.resize(nums.size());
-    lProduct.resize(nums.size());
-
-    rProduct.back() = 1;
-
-    for (size_t i = 1; i < nums.size(); ++i)
+    int leftProduct = 1;
+    for (int i = 0; i < n; ++i)
     {
-        const size_t rPrev = nums.size() - i;
-        rProduct[rPrev - 1] = rProduct[rPrev] * nums[rPrev];
+        result[i] = leftProduct;
+        leftProduct *= nums[i];
     }
 
-    lProduct.front() = 1;
-
-    for (size_t i = 1; i < nums.size(); ++i)
+    int rightProduct = 1;
+    for (int i = n - 1; i >= 0; --i)
     {
-        const size_t lPrev = i - 1;
-        lProduct[i] = lProduct[lPrev] * nums[lPrev];
-        lProduct[i - 1] *= rProduct[i - 1];
+        result[i] *= rightProduct;
+        rightProduct *= nums[i];
     }
 
-    return lProduct;
+    return result;
 }
 
 int main(int argc, char const *argv[])
