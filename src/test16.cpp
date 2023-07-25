@@ -37,7 +37,7 @@ static inline void addNum(int &result, const std::pair<const char, size_t> &n)
     }
 }
 
-int compress(vector<char> &chars)
+int compress2(vector<char> &chars)
 {
     map<char, size_t> nums;
 
@@ -65,6 +65,57 @@ int compress(vector<char> &chars)
     for (const std::pair<const char, size_t> &n : nums)
     {
         addNum(result, n);
+    }
+
+    return result;
+}
+
+static inline size_t findAndRemove(vector<char> &chars, char c)
+{
+    const size_t before = chars.size();
+    auto newEnd = remove(chars.begin(), chars.end(), c);
+    chars.erase(newEnd, chars.end());
+    return before - chars.size();
+}
+
+int compress(vector<char> &chars)
+{
+    int result = 0;
+
+    for (; !chars.empty();)
+    {
+        const char c = chars.front();
+        size_t counter = findAndRemove(chars, c);
+
+        result <<= 4;
+        if (c >= 'a' && c <= 'z')
+            result += (c - 'a' + 10);
+        else if (c >= 'A' && c <= 'Z')
+            result += (c - 'A' + 10);
+        else
+            result += (c - '0');
+
+        if (counter == 1)
+        {
+            continue;
+        }
+
+        while (true)
+        {
+            result <<= 4;
+
+            if (counter > 10)
+            {
+                const size_t dozens = (counter / 10 * 10);
+                result += (dozens / 10);
+                counter -= dozens;
+            }
+            else
+            {
+                result += counter;
+                break;
+            }
+        }
     }
 
     return result;
