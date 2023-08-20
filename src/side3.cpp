@@ -1,6 +1,6 @@
 // https://www.youtube.com/watch?v=R4UHOLZ-bEk
 
-void GetHighestSum(TreeNode *node, int &sum, int &highest)
+void GetHighestSum(TreeNode *node, int &highest, int sum = 0)
 {
     if (!node)
     {
@@ -17,20 +17,16 @@ void GetHighestSum(TreeNode *node, int &sum, int &highest)
         }
     }
 
-    GetHighestSum(node->left, sum, highest);
-    GetHighestSum(node->right, sum, highest);
-
-    sum -= node->val;
+    GetHighestSum(node->left, highest, sum);
+    GetHighestSum(node->right, highest, sum);
 }
 
 int main(int argc, char const *argv[])
 {
     TreeNode node{1, new TreeNode{4, new TreeNode{2}, new TreeNode{3, new TreeNode{2}}}, new TreeNode{7, new TreeNode{5}, new TreeNode{4}}};
 
-    int sum = 0;
-    int highest = sum;
-
-    GetHighestSum(&node, sum, highest);
+    int highest = 0;
+    GetHighestSum(&node, highest);
 
     return 0;
 }
