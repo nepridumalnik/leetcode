@@ -2,24 +2,24 @@
 
 int longestConsecutive(vector<int> &nums)
 {
-    if (nums.empty())
+    const unordered_set<int> s{nums.begin(), nums.end()};
+    size_t longest = 0;
+
+    for (const int n : s)
     {
-        return 0;
+        if (!s.count(n - 1))
+        {
+            size_t current = 1;
+            while (s.count(n + current))
+            {
+                ++current;
+            }
+
+            longest = max(longest, current);
+        }
     }
 
-    set<int> s{nums.begin(), nums.end()};
-    size_t count = 0;
-    int lastOne = 0;
-    auto it = s.begin();
-
-    do
-    {
-        lastOne = *it;
-        ++it;
-        ++count;
-    } while (it != s.end() && *it == (lastOne + 1));
-
-    return count;
+    return longest;
 }
 
 int main(int argc, char const *argv[])
