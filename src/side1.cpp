@@ -1,16 +1,5 @@
 // Переворот односвязного списка
 
-struct ListNode
-{
-    int val;
-
-    ListNode *next;
-
-    ListNode() : val{0}, next{nullptr} {};
-    ListNode(int x, ListNode *node = nullptr) : val{x}, next{node} {};
-    ~ListNode() { delete next; }
-};
-
 ListNode *RevertList(ListNode *head)
 {
     // Запоминаем начало списка

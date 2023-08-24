@@ -1,15 +1,15 @@
 // Своя реализация двусвязного списка
 
 template <typename T>
-struct ListNode
+struct CustomListNode
 {
     T val;
-    ListNode *next;
-    ListNode *prev;
+    CustomListNode *next;
+    CustomListNode *prev;
 
-    ListNode() : val{0}, next{nullptr} {};
-    ListNode(int x, ListNode *prev = nullptr, ListNode *next = nullptr) : val{x}, prev{prev}, next{next} {};
-    ~ListNode() { delete next; }
+    CustomListNode() : val{0}, next{nullptr} {};
+    CustomListNode(int x, CustomListNode *prev = nullptr, CustomListNode *next = nullptr) : val{x}, prev{prev}, next{next} {};
+    ~CustomListNode() { delete next; }
 };
 
 template <typename T>
@@ -25,8 +25,8 @@ public:
 
     void push_front(T val)
     {
-        ListNode<T> *node = head;
-        ListNode<T> *newHead = new ListNode<T>{val, nullptr, head};
+        CustomListNode<T> *node = head;
+        CustomListNode<T> *newHead = new CustomListNode<T>{val, nullptr, head};
         head->prev = newHead;
         head = newHead;
 
@@ -40,21 +40,21 @@ public:
     {
         if (back)
         {
-            ListNode<T> *node = back;
-            ListNode<T> *newBack = new ListNode<T>{val, back};
+            CustomListNode<T> *node = back;
+            CustomListNode<T> *newBack = new CustomListNode<T>{val, back};
             back->next = newBack;
             back = newBack;
         }
         else
         {
-            head = new ListNode<T>{val};
+            head = new CustomListNode<T>{val};
             back = head;
         }
     }
 
 private:
-    ListNode<T> *head;
-    ListNode<T> *back;
+    CustomListNode<T> *head;
+    CustomListNode<T> *back;
 };
 
 int main(int argc, char const *argv[])

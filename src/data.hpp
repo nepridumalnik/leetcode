@@ -10,8 +10,20 @@
 #include <algorithm>
 #include <unordered_map>
 #include <unordered_set>
+#include <initializer_list>
 
 using namespace std;
+
+struct ListNode
+{
+    int val;
+
+    ListNode *next;
+
+    ListNode() : val{0}, next{nullptr} {};
+    ListNode(int x, ListNode *node = nullptr) : val{x}, next{node} {};
+    ~ListNode() { delete next; }
+};
 
 struct TreeNode
 {
