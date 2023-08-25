@@ -1,97 +1,72 @@
 // https://leetcode.com/problems/min-stack
 
-struct Node
-{
-    Node(int value = 0, Node *previous = nullptr)
-        : val{value}, prev{previous}
-    {
-    }
-
-    int val;
-    Node *prev;
-};
-
 class MinStack
 {
 public:
     MinStack()
-        : m_head{nullptr}, m_tail{nullptr}
     {
     }
 
     void push(int val)
     {
-        m_tail = new Node{val, m_tail};
+        m_stack.push(val);
 
-        if (m_minValue.empty() || m_minValue.back() >= val)
+        if (m_minStack.empty() || m_minStack.top().first > val)
         {
-            m_minValue.push_back(val);
+            m_minStack.push({val, 1});
         }
-
-        if (!m_head)
+        else if (m_minStack.top().first == val)
         {
-            m_head = m_tail;
+            ++m_minStack.top().second;
         }
     }
 
     void pop()
     {
-        if (!m_tail)
+        if (!m_minStack.empty())
         {
-            return;
-        }
-
-        Node *prev = m_tail->prev;
-        Node *last = m_tail;
-
-        if (!prev)
-        {
-            m_head = nullptr;
-            m_tail = nullptr;
-
-            while (!m_minValue.empty())
+            if (m_minStack.top().first == m_stack.top())
             {
-                m_minValue.pop_back();
+                if (m_minStack.top().second == 1)
+                {
+                    m_minStack.pop();
+                }
+                else
+                {
+                    --m_minStack.top().second;
+                }
             }
         }
-        else
-        {
-            m_tail = prev;
-        }
 
-        if (!m_minValue.empty() && m_minValue.back() == last->val)
+        if (!m_stack.empty())
         {
-            m_minValue.pop_back();
+            m_stack.pop();
         }
-
-        delete last;
     }
 
     int top()
     {
-        if (m_tail)
+        if (m_stack.empty())
         {
-            return m_tail->val;
+            return 0;
         }
 
-        return 0;
+        return m_stack.top();
     }
 
     int getMin()
     {
-        if (!m_minValue.empty())
+        if (m_minStack.empty())
         {
-            return m_minValue.back();
+            return 0;
         }
 
-        return 0;
+        return m_minStack.top().first;
     }
 
 private:
-    Node *m_head;
-    Node *m_tail;
-
-    list<int> m_minValue;
+    stack<int> m_stack;
+    stack<pair<int, size_t>> m_minStack;
 };
 
 int main(int argc, char const *argv[])
@@ -99,11 +74,6 @@ int main(int argc, char const *argv[])
     MinStack s;
     int resMin = 0;
     int resTop = 0;
-
-    // s.push(1);
-    // s.push(2);
-    // s.push(0);
-    // s.push(3);
 
     s.push(-2);
     s.push(0);
@@ -113,6 +83,9 @@ int main(int argc, char const *argv[])
     resTop = s.top();
 
     s.pop();
+
+    resTop = s.top();
+    resMin = s.getMin();
     s.pop();
     s.pop();
     s.pop();
