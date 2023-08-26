@@ -2,17 +2,27 @@
 
 vector<int> dailyTemperatures(vector<int> &temperatures)
 {
+    stack<int> mem;
     vector<int> answers;
     answers.resize(temperatures.size());
 
-    for (size_t i = 0; i < temperatures.size(); ++i)
+    for (size_t i = 0; i < temperatures.size() - 1; ++i)
     {
-        for (size_t j = i + 1; j < temperatures.size(); ++j)
+        if (temperatures[i] < temperatures[i + 1])
         {
-            if (temperatures[i] < temperatures[j])
+            answers[i] = 1;
+        }
+        else
+        {
+            mem.push(i);
+        }
+
+        if (!mem.empty() && temperatures[mem.top()] < temperatures[i + 1])
+        {
+            while (!mem.empty() && temperatures[mem.top()] < temperatures[i + 1])
             {
-                answers[i] = j - i;
-                break;
+                answers[mem.top()] = i - mem.top() + 1;
+                mem.pop();
             }
         }
     }
