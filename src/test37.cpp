@@ -3,41 +3,20 @@
 class MinStack
 {
 public:
-    MinStack()
-    {
-    }
-
     void push(int val)
     {
-        m_stack.push(val);
-
-        if (m_minStack.empty() || m_minStack.top().first > val)
+        if (m_stack.empty())
         {
-            m_minStack.push({val, 1});
+            m_stack.push({val, val});
         }
-        else if (m_minStack.top().first == val)
+        else
         {
-            ++m_minStack.top().second;
+            m_stack.push({val, min(m_stack.top().second, val)});
         }
     }
 
     void pop()
     {
-        if (!m_minStack.empty())
-        {
-            if (m_minStack.top().first == m_stack.top())
-            {
-                if (m_minStack.top().second == 1)
-                {
-                    m_minStack.pop();
-                }
-                else
-                {
-                    --m_minStack.top().second;
-                }
-            }
-        }
-
         if (!m_stack.empty())
         {
             m_stack.pop();
@@ -51,22 +30,21 @@ public:
             return 0;
         }
 
-        return m_stack.top();
+        return m_stack.top().first;
     }
 
     int getMin()
     {
-        if (m_minStack.empty())
+        if (m_stack.empty())
         {
             return 0;
         }
 
-        return m_minStack.top().first;
+        return m_stack.top().second;
     }
 
 private:
-    stack<int> m_stack;
-    stack<pair<int, size_t>> m_minStack;
+    stack<pair<int, int>> m_stack;
 };
 
 int main(int argc, char const *argv[])
