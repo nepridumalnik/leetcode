@@ -2,42 +2,25 @@
 
 int trap(vector<int> &height)
 {
-    vector<int> maxLeft;
-    maxLeft.resize(height.size());
-    maxLeft.front() = height.front();
-    maxLeft.back() = height.back();
-
-    int maxHeight = maxLeft.front();
-
-    for (size_t i = 1; i < (height.size() - 1); ++i)
-    {
-        maxLeft[i] = max(maxHeight, height[i - 1]);
-        maxHeight = max(maxHeight, height[i]);
-    }
-
-    vector<int> maxRight;
-    maxRight.resize(height.size());
-    maxRight.front() = height.front();
-    maxRight.back() = height.back();
-
-    maxHeight = maxRight.back();
-
-    for (size_t i = 1; i < height.size(); ++i)
-    {
-        maxRight[height.size() - i - 1] = max(maxHeight, height[height.size() - i]);
-        maxHeight = max(maxHeight, height[height.size() - i - 1]);
-    }
-
     int square = 0;
+    int *left = height.data();
+    int *right = height.data() + height.size() - 1;
+    int maxLeft = *left;
+    int maxRight = *right;
 
-    for (size_t i = 0; i < height.size(); ++i)
+    while (left < right)
     {
-        int currentMin = min(maxLeft[i], maxRight[i]);
-        int currentSquare = currentMin - height[i];
-
-        if (currentSquare > 0)
+        if (*left <= *right)
         {
-            square += currentSquare;
+            ++left;
+            maxLeft = max(*left, maxLeft);
+            square += maxLeft - *left;
+        }
+        else
+        {
+            --right;
+            maxRight = max(*right, maxRight);
+            square += maxRight - *right;
         }
     }
 
