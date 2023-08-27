@@ -2,34 +2,30 @@
 
 int carFleet(int target, vector<int> &position, vector<int> &speed)
 {
-    static const auto getTimeToTarget = [](int target, int position, int speed) -> double
-    {
-        return (target - position) / speed;
-    };
-
     // <position, speed>
-    set<pair<int, int>> cars;
+    vector<pair<int, int>> cars;
     // <time to target, position>
     stack<pair<double, int>> stk;
 
+    // O(n)
     for (size_t i = 0; i < position.size(); ++i)
     {
-        cars.insert({position[i], speed[i]});
+        cars.push_back({position[i], speed[i]});
     }
 
-    for (auto car = cars.rbegin(); car != cars.rend(); ++car)
+    // O(n*log(n))
+    sort(cars.rbegin(), cars.rend());
+
+    // O(n)
+    for (auto car = cars.begin(); car != cars.end(); ++car)
     {
-        double t = getTimeToTarget(target, car->first, car->second);
+        int pos = car->first;
+        int sp = car->second;
+        double t = (static_cast<double>(target) - static_cast<double>(pos)) / static_cast<double>(sp);
 
-        if (stk.empty())
+        if (stk.empty() || stk.top().first < t)
         {
-            stk.push({t, car->first});
-            continue;
-        }
-
-        if (stk.top().first < t)
-        {
-            stk.push({t, car->first});
+            stk.push({t, pos});
         }
     }
 
@@ -41,6 +37,8 @@ int main(int argc, char const *argv[])
     int res0 = 0;
     int res1 = 0;
     int res2 = 0;
+    int res3 = 0;
+    int res4 = 0;
 
     {
         vector<int> position{10, 8, 0, 5, 3};
@@ -56,6 +54,16 @@ int main(int argc, char const *argv[])
         vector<int> position{0, 2, 4};
         vector<int> speed{4, 2, 1};
         res2 = carFleet(100, position, speed); // 1
+    }
+    {
+        vector<int> position{6, 8};
+        vector<int> speed{3, 2};
+        res3 = carFleet(10, position, speed); // 2
+    }
+    {
+        vector<int> position{10, 8, 0, 5, 3};
+        vector<int> speed{2, 4, 1, 1, 3};
+        res4 = carFleet(12, position, speed); // 3
     }
 
     return 0;
