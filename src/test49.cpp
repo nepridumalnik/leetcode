@@ -2,32 +2,22 @@
 
 int removeDuplicates(vector<int> &nums)
 {
-	if (nums.empty())
+	if (nums.size() <= 2)
 	{
-		return 0;
+		return nums.size();
 	}
 
-	int index = 1;
-	int counter = 1;
+	int i = 2;
 
-	for (size_t i = 1; i < nums.size(); ++i)
+	for (size_t idx = 2; idx < nums.size(); ++idx)
 	{
-		if (nums[i] == nums[i - 1])
+		if (nums[i - 2] != nums[idx])
 		{
-			if (counter < 2)
-			{
-				nums[index++] = nums[i];
-			}
-			++counter;
-		}
-		else
-		{
-			nums[index++] = nums[i];
-			counter = 1;
+			nums[i++] = nums[idx];
 		}
 	}
 
-	return index;
+	return i;
 }
 
 int main(int argc, char const *argv[])
