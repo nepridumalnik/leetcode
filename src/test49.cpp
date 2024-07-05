@@ -7,19 +7,27 @@ int removeDuplicates(vector<int> &nums)
 		return 0;
 	}
 
-	for (int i = 0; i < nums.size() - 1; ++i)
+	int index = 1;
+	int counter = 1;
+
+	for (size_t i = 1; i < nums.size(); ++i)
 	{
-		if (nums[i] == nums[i + 1])
+		if (nums[i] == nums[i - 1])
 		{
-			if (i + 2 < nums.size() && nums[i] == nums[i + 2])
+			if (counter < 2)
 			{
-				nums.erase(nums.begin() + i + 1);
-				--i;
+				nums[index++] = nums[i];
 			}
+			++counter;
+		}
+		else
+		{
+			nums[index++] = nums[i];
+			counter = 1;
 		}
 	}
 
-	return nums.size();
+	return index;
 }
 
 int main(int argc, char const *argv[])
