@@ -18,16 +18,9 @@ void rotate(vector<int> &nums, int k)
 		newK = k;
 	}
 
-	for (size_t i = 0; i < newK; ++i)
-	{
-		int last = nums.back();
-		int current = nums[0];
-		for (size_t j = 1; j < nums.size(); ++j)
-		{
-			swap(current, nums[j]);
-		}
-		nums[0] = last;
-	}
+	reverse(nums.begin(), nums.end());
+	reverse(nums.begin(), nums.begin() + newK);
+	reverse(nums.begin() + newK, nums.end());
 }
 
 int main(int argc, char const *argv[])
