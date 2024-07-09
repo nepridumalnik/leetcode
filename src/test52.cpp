@@ -16,7 +16,7 @@ int maxProfit(vector<int> &prices)
 
 int main(int argc, char const *argv[])
 {
-	int result1 = 5;
+	int result1 = 0; // 5
 	vector<int> prices1 = {7, 1, 5, 3, 6, 4};
 	int result2 = 0;
 	vector<int> prices2 = {7, 6, 4, 3, 1};
