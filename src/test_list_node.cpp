@@ -1,6 +1,6 @@
 int main(int argc, char const *argv[])
 {
-    ListNode node{1, 2, 3};
+	ListNode node{1, 2, 3};
 
-    return 0;
+	return 0;
 }
