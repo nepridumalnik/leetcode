@@ -18,8 +18,8 @@ ListNode *reverseList(ListNode *head)
 
 int main(int argc, char const *argv[])
 {
-    ListNode *res0 = new ListNode{0, new ListNode{1, new ListNode{2, new ListNode{3, new ListNode{4, new ListNode{5}}}}}};
-    ListNode *res1 = new ListNode{1, new ListNode{2}};
+    ListNode *res0 = new ListNode{0, 1, 2, 3, 4, 5};
+    ListNode *res1 = new ListNode{1, 2};
 
     res0 = reverseList(res0);
     res1 = reverseList(res1);

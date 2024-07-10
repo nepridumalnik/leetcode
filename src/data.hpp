@@ -15,25 +15,49 @@
 
 using namespace std;
 
-struct ListNode
+class ListNode
 {
-    int val;
-
-    ListNode *next;
-
+public:
     ListNode() : val{0}, next{nullptr} {};
-    ListNode(int x, ListNode *node = nullptr) : val{x}, next{node} {};
+    ListNode(const int x) : val{x} {};
+    ListNode(int x, ListNode *ptr) : val{x}, next{ptr} {};
+
+    ListNode(const std::initializer_list<int> values)
+        : val{0}, next{nullptr}
+    {
+        if (values.size() == 0)
+        {
+            return;
+        }
+        else if (values.size() == 1)
+        {
+            val = *values.begin();
+            return;
+        }
+
+        auto it = values.begin();
+        ListNode *current = this;
+        current->val = *it;
+        ++it;
+
+        for (; it != values.end(); ++it)
+        {
+            int num = *it;
+            current->next = new ListNode{num};
+            current = current->next;
+        }
+    }
+
     ~ListNode() { delete next; }
+
+public:
+    int val;
+    ListNode *next;
 };
 
-struct TreeNode
+class TreeNode
 {
-    int val;
-
-    TreeNode *left;
-
-    TreeNode *right;
-
+public:
     TreeNode(int x = 0, TreeNode *left = nullptr, TreeNode *right = nullptr) : val{x}, left{left}, right{right} {}
 
     ~TreeNode()
@@ -41,4 +65,9 @@ struct TreeNode
         delete left;
         delete right;
     }
+
+public:
+    int val;
+    TreeNode *left;
+    TreeNode *right;
 };
