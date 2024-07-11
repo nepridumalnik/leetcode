@@ -61,7 +61,6 @@ unique_ptr<ListNode> addNumbers(ListNode *l1, ListNode *l2)
 	return unique_ptr<ListNode>{addTwoNumbers(l1, l2)};
 }
 
-// TODO: Добавить сложение списков напрямую, а не при помощи чисел
 int main(int argc, char const *argv[])
 {
 	{
