@@ -96,8 +96,6 @@ int search(vector<int> &nums, int target)
 {
 	int left = 0;
 	int right = nums.size() - 1;
-	int first = nums[0];
-	int last = nums.back();
 
 	while (left <= right)
 	{
