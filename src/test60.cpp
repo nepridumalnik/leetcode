@@ -39,7 +39,6 @@ int searchRotated(vector<int> &nums, int target)
 	int right = nums.size() - 1;
 	int mid = -1;
 	int first = nums[0];
-	int last = nums.back();
 
 	while (left <= right)
 	{
