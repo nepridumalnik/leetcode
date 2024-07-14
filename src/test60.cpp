@@ -80,7 +80,7 @@ int searchRotated(vector<int> &nums, int target)
 	return binarySearch(nums, mid + 1, nums.size() - 1, target);
 }
 
-int search(vector<int> &nums, int target)
+int search3(vector<int> &nums, int target)
 {
 	// Ротирован
 	if (nums.back() < *nums.begin())
@@ -92,10 +92,53 @@ int search(vector<int> &nums, int target)
 	return binarySearch(nums, 0, nums.size() - 1, target);
 }
 
+int search(vector<int> &nums, int target)
+{
+	int left = 0;
+	int right = nums.size() - 1;
+	int first = nums[0];
+	int last = nums.back();
+
+	while (left <= right)
+	{
+		int mid = left + (right - left) / 2;
+		int e = nums[mid];
+
+		if (e == target)
+		{
+			return mid;
+		}
+		else if (nums[mid] >= nums[left])
+		{
+			if (nums[left] <= target && target <= nums[mid])
+			{
+				right = mid - 1;
+			}
+			else
+			{
+				left = mid + 1;
+			}
+		}
+		else
+		{
+			if (nums[mid] <= target && target <= nums[right])
+			{
+				left = mid + 1;
+			}
+			else
+			{
+				right = mid - 1;
+			}
+		}
+	}
+
+	return -1;
+}
+
 int main(int argc, char const *argv[])
 {
-	int target0 = 4;
-	vector<int> nums0{0, 1, 2, 3, 4, 5, 6, 7};
+	int target0 = 7;
+	vector<int> nums0{6, 7, 0, 1, 2};
 	int target1 = 0;
 	vector<int> nums1{4, 5, 6, 7, 0, 1, 2};
 	int target2 = 3;
@@ -111,7 +154,7 @@ int main(int argc, char const *argv[])
 	int target7 = 1;
 	vector<int> nums7{4, 5, 1, 2, 3};
 
-	int result0 = search(nums0, target0); // 4
+	int result0 = search(nums0, target0); // 1
 	int result1 = search(nums1, target1); // 4
 	int result2 = search(nums2, target2); // -1
 	int result3 = search(nums3, target3); // -1
