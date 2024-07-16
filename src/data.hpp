@@ -24,6 +24,8 @@ public:
 
 	ListNode(const std::initializer_list<int> values) : val{0}, next{nullptr}
 	{
+		shouldFree_ = true;
+
 		if (values.size() == 0)
 		{
 			return;
@@ -42,6 +44,7 @@ public:
 		for (; it != values.end(); ++it)
 		{
 			int num = *it;
+			current->shouldFree_ = true;
 			current->next = new ListNode{num};
 			current = current->next;
 		}
@@ -49,12 +52,18 @@ public:
 
 	~ListNode()
 	{
-		delete next;
+		if (shouldFree_)
+		{
+			delete next;
+		}
 	}
 
 public:
 	int val;
 	ListNode *next;
+
+private:
+	bool shouldFree_ = false;
 };
 
 class TreeNode
