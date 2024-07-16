@@ -1,6 +1,6 @@
 // https://leetcode.com/problems/reverse-linked-list-ii
 
-// TODO: перешать
+// TODO: перерешать
 ListNode *reverseBetween(ListNode *head, int left, int right)
 {
     if (left >= right || !head)
